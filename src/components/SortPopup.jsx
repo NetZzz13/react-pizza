@@ -1,27 +1,29 @@
 import React, { useEffect, useRef, useState } from "react";
 
-const SortPopup = ({items}) => {
+//React.memo - делает поверхностное сравнение (если ссылка на items не изменилась - не делать лишний ререндер)
+const SortPopup = React.memo(({ items }) => {
   const [visiblePopup, setVisiblePopup] = useState(false);
   const [activeItem, setActiveItem] = useState(0);
   const sortRef = useRef();
-    const activeLabel = items[activeItem].name;
+  const activeLabel = items[activeItem].name;
 
-  //скрытие popup при клике вне 
+  //скрытие popup при клике вне
   const handleOutsideClick = (e) => {
     if (!e.path.includes(sortRef.current)) {
-        setVisiblePopup(false)
+      setVisiblePopup(false);
     }
   };
 
   useEffect(() => {
-      //ловим клик после первого рендера
+    //ловим клик после первого рендера
     document.body.addEventListener("click", handleOutsideClick);
   }, []);
 
   return (
     <div ref={sortRef} className="sort">
       <div className="sort__label">
-        <svg className={visiblePopup ? 'rotated' : ''}
+        <svg
+          className={visiblePopup ? "rotated" : ""}
           width="10"
           height="6"
           viewBox="0 0 10 6"
@@ -34,27 +36,29 @@ const SortPopup = ({items}) => {
           />
         </svg>
         <b>Сортировка по:</b>
-        <span onClick={() => setVisiblePopup(!visiblePopup)}>{activeLabel}</span>
+        <span onClick={() => setVisiblePopup(!visiblePopup)}>
+          {activeLabel}
+        </span>
       </div>
 
       {visiblePopup && (
         <div className="sort__popup">
           <ul>
-          {items &&
-          items.map((elem, index) => (
-            <li
-              className={activeItem === index ? "active" : ""}
-              key={`${elem.name}_${index}`}
-              onClick={() => setActiveItem(index)}
-            >
-              {elem.name}
-            </li>
-          ))}
+            {items &&
+              items.map((elem, index) => (
+                <li
+                  className={activeItem === index ? "active" : ""}
+                  key={`${elem.name}_${index}`}
+                  onClick={() => setActiveItem(index)}
+                >
+                  {elem.name}
+                </li>
+              ))}
           </ul>
         </div>
       )}
     </div>
   );
-};
+});
 
 export default SortPopup;

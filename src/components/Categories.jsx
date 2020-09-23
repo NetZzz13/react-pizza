@@ -1,15 +1,20 @@
 import React, { useState } from "react";
 
-const Categories = ({ items, onClick }) => {
+//React.memo - делает поверхностное сравнение (если ссылка на items не изменилась - не делать лишний ререндер)
+const Categories = React.memo(({ items, onClickItem }) => {
   const [activeItem, setActiveItem] = useState(null);
 
-  
+  const onSelectItem = (index) => {
+    setActiveItem(index);
+    onClickItem(index);
+  };
+
   return (
     <div className="categories">
       <ul>
         <li
           className={activeItem === null ? "active" : ""}
-          onClick={() => setActiveItem(null)}
+          onClick={() => onSelectItem(null)}
         >
           Все
         </li>
@@ -18,7 +23,7 @@ const Categories = ({ items, onClick }) => {
             <li
               className={activeItem === index ? "active" : ""}
               key={`${elem}_${index}`}
-              onClick={() => setActiveItem(index)}
+              onClick={() => onSelectItem(index)}
             >
               {elem}
             </li>
@@ -26,6 +31,6 @@ const Categories = ({ items, onClick }) => {
       </ul>
     </div>
   );
-};
+});
 
 export default Categories;

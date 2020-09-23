@@ -9,8 +9,6 @@ import store from "./redux/store";
 
 /* console.log(store) */
 
-
-
 ReactDOM.render(
   <BrowserRouter>
     <Provider store={store}>

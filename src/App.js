@@ -4,20 +4,17 @@ import { Header } from "./components";
 import { Home, Cart } from "./pages";
 import axios from "axios";
 import { actions } from "./redux/reducers/pizzas-reducer";
-import { useDispatch, useSelector } from "react-redux";
-import { getPizzas } from "./redux/selectors/selectors";
-
+import { useDispatch } from "react-redux";
 
 const App = (props) => {
+  //dispatch оставил в App, а не в Home, чтобы при переключении страниц не отправлялся повторно запрос
   const dispatch = useDispatch();
-  const items = useSelector(getPizzas);
 
   useEffect(() => {
     axios
-      .get("http://localhost:3000/db.json")
-      .then((response) => dispatch(actions.setPizzas(response.data.pizzas)));
+      .get("http://localhost:3001/pizzas")
+      .then((response) => dispatch(actions.setPizzas(response.data)));
   }, []);
-
 
   /* let [pizzas, setPizzas] = useState([]);
 
@@ -37,7 +34,7 @@ const App = (props) => {
     <div className="wrapper">
       <Header />
       <div className="content">
-        <Route exact path="/" component={() => <Home pizzas={items} />} />
+        <Route exact path="/" component={() => <Home />} />
         <Route exact path="/cart" component={() => <Cart />} />
       </div>
     </div>
