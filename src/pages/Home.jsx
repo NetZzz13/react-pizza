@@ -1,8 +1,16 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Categories, SortPopup, PizzaBlock } from "../components";
+import Preloader from "../components/common/Preloader";
 import { actions } from "../redux/reducers/filters-reducer";
-import { getPizzas } from "../redux/selectors/selectors";
+import { fetchPizzasTC } from "../redux/reducers/pizzas-reducer";
+import {
+  getCategory,
+  getIsLoading,
+  getPizzas,
+  getSortBy,
+  getCartItems,
+} from "../redux/selectors/selectors";
 
 const categoryNames = [
   "Мясные",
@@ -11,31 +19,71 @@ const categoryNames = [
   "Острые",
   "Закрытые",
 ];
+
 const sortNames = [
-  { name: "популярности", type: "popular" },
-  { name: "цене", type: "price" },
-  { name: "алфавиту", type: "alphabet" },
+  { name: "популярности", type: "popular", order: "desc" },
+  { name: "цене", type: "price", order: "desc" },
+  { name: "алфавиту", type: "name", order: "asc" },
 ];
 
 const Home = (props) => {
   const pizzas = useSelector(getPizzas);
+  const isLoading = useSelector(getIsLoading);
+
+  const category = useSelector(getCategory);
+  const sortBy = useSelector(getSortBy);
+  const cartItems = useSelector(getCartItems);
+
   const dispatch = useDispatch();
+
+  /* console.log (category, sortBy) */
+
+  useEffect(() => {
+    //if проверяет длину массива, чтобы не было лишнего нового запроса при переходе с Cart на Home
+    /* if (!pizzas.length) { */
+    dispatch(fetchPizzasTC(category, sortBy));
+    /* } */
+  }, [category, sortBy]);
 
   //useCallBack - для отмены лишнего ререндера Категорий при получении данных с серва
   const onSelectCategory = useCallback((category) => {
     dispatch(actions.setCategory(category));
   }, []);
 
+  const onSelectSortBy = useCallback((type) => {
+    dispatch(actions.setSortBy(type));
+  }, []);
+
   return (
     <div className="container">
       <div className="content__top">
-        <Categories onClickItem={onSelectCategory} items={categoryNames} />
-        <SortPopup items={sortNames} />
+        <Categories
+          onClickCategory={onSelectCategory}
+          items={categoryNames}
+          activeCategory={category}
+        />
+        <SortPopup
+          items={sortNames}
+          activeSortType={sortBy.type}
+          onClickSortBy={onSelectSortBy}
+        />
       </div>
       <h2 className="content__title">Все пиццы</h2>
-      <div className="content__items">
-        {pizzas && pizzas.map((elem) => <PizzaBlock key={elem.id} {...elem} />)}
-      </div>
+      {isLoading ? (
+        <Preloader />
+      ) : (
+        <div className="content__items">
+          {pizzas.map((elem) => (
+            <PizzaBlock
+              key={elem.id}
+              addedCount={
+                cartItems[elem.id] && cartItems[elem.id].length
+              } /* onAddPizza = {() => alert('22')} */
+              {...elem}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 };

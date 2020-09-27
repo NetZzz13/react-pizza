@@ -1,13 +1,39 @@
 import React, { useState } from "react";
 import cn from "classnames";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
+import Button from "./common/Button";
+import { actions } from "../redux/reducers/cart-reducer";
+import { useDispatch } from "react-redux";
 
-const PizzaBlock = ({ name, imageUrl, price, types, sizes }) => {
-  const [activeType, setActiveType] = useState(types[0]);
-  const [activeSize, setActiveSize] = useState(sizes[0]);
-
+const PizzaBlock = ({
+  id,
+  name,
+  imageUrl,
+  price,
+  types,
+  sizes,
+  addedCount,
+}) => {
   const availableTypes = ["тонкое", "традиционное"];
   const availableSizes = [26, 30, 40];
+
+  const [activeType, setActiveType] = useState(types[0]);
+  const [activeSize, setActiveSize] = useState(0);
+
+  const dispatch = useDispatch();
+
+  const onAddPizza = () => {
+    const obj = {
+      id,
+      name,
+      imageUrl,
+      price,
+      size: availableSizes[activeSize],
+      type: availableTypes[activeType],
+    };
+    /* console.log(obj) */
+    dispatch(actions.addPizzaToCart(obj));
+  };
 
   return (
     <div className="pizza-block">
@@ -45,7 +71,7 @@ const PizzaBlock = ({ name, imageUrl, price, types, sizes }) => {
       </div>
       <div className="pizza-block__bottom">
         <div className="pizza-block__price">от {price} руб.</div>
-        <div className="button button--outline button--add">
+        <Button className="button--add" onClick={onAddPizza} outline>
           <svg
             width="12"
             height="12"
@@ -59,13 +85,12 @@ const PizzaBlock = ({ name, imageUrl, price, types, sizes }) => {
             />
           </svg>
           <span>Добавить</span>
-          <i>2</i>
-        </div>
+          {addedCount && <i>{addedCount}</i>}
+        </Button>
       </div>
     </div>
   );
 };
-
 
 PizzaBlock.propTypes = {
   //.isRequired аналог '?' в TS
@@ -74,6 +99,6 @@ PizzaBlock.propTypes = {
   price: PropTypes.number.isRequired,
   types: PropTypes.arrayOf(PropTypes.number).isRequired,
   sizes: PropTypes.arrayOf(PropTypes.number).isRequired,
-}
+};
 
 export default PizzaBlock;

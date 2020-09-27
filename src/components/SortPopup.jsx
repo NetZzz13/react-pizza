@@ -1,17 +1,22 @@
 import React, { useEffect, useRef, useState } from "react";
 
 //React.memo - делает поверхностное сравнение (если ссылка на items не изменилась - не делать лишний ререндер)
-const SortPopup = React.memo(({ items }) => {
+const SortPopup = React.memo(({ items, onClickSortBy, activeSortType }) => {
   const [visiblePopup, setVisiblePopup] = useState(false);
-  const [activeItem, setActiveItem] = useState(0);
   const sortRef = useRef();
-  const activeLabel = items[activeItem].name;
+  const activeLabel = items.find((elem) => elem.type === activeSortType).name;
 
   //скрытие popup при клике вне
   const handleOutsideClick = (e) => {
+    /* const path = e.path || (e.composedPath && e.composedPath()) || composedPath(e.target); //for bag of hidden in Firefox */
     if (!e.path.includes(sortRef.current)) {
       setVisiblePopup(false);
     }
+  };
+
+  const onSelectItem = (index) => {
+    onClickSortBy(index);
+    setVisiblePopup(false);
   };
 
   useEffect(() => {
@@ -47,9 +52,9 @@ const SortPopup = React.memo(({ items }) => {
             {items &&
               items.map((elem, index) => (
                 <li
-                  className={activeItem === index ? "active" : ""}
+                  className={activeSortType === elem.type ? "active" : ""}
                   key={`${elem.name}_${index}`}
-                  onClick={() => setActiveItem(index)}
+                  onClick={() => onSelectItem(elem)}
                 >
                   {elem.name}
                 </li>

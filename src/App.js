@@ -1,21 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Route } from "react-router-dom";
 import { Header } from "./components";
 import { Home, Cart } from "./pages";
-import axios from "axios";
-import { actions } from "./redux/reducers/pizzas-reducer";
-import { useDispatch } from "react-redux";
 
 const App = (props) => {
-  //dispatch оставил в App, а не в Home, чтобы при переключении страниц не отправлялся повторно запрос
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    axios
-      .get("http://localhost:3001/pizzas")
-      .then((response) => dispatch(actions.setPizzas(response.data)));
-  }, []);
-
   /* let [pizzas, setPizzas] = useState([]);
 
   useEffect(() => {
