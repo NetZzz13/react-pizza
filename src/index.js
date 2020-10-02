@@ -1,4 +1,4 @@
-import React, { useDispatch } from "react";
+import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter } from "react-router-dom";
 import "./scss/app.scss";
@@ -7,7 +7,6 @@ import { Provider } from "react-redux";
 
 import store from "./redux/store";
 
-/* console.log(store) */
 
 ReactDOM.render(
   <BrowserRouter>

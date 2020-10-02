@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import logoSvg from "../assets/img/pizza-logo.svg";
+import logoSvg from "../assets/img/pizza-logo.png";
 import { getTotalCount, getTotalPrice } from "../redux/selectors/selectors";
 import Button from "./common/Button";
 
@@ -17,8 +17,8 @@ const Header = () => {
           <div className="header__logo">
             <img width="38" src={logoSvg} alt="Pizza logo" />
             <div>
-              <h1>React Pizza</h1>
-              <p>самая вкусная пицца во вселенной</p>
+              <h1>One, two pizza!</h1>
+              <p>о, а давай закажем...</p>
             </div>
           </div>
         </Link>
