@@ -3,13 +3,13 @@ import { pizzasAPI } from "../../api/api";
 
 const initialState = {
   items: [],
-  isLoading: true,
+  isLoading: false,
 };
 
 const pizzasReducer = (state = initialState, action) => {
   switch (action.type) {
     case "SET_PIZZAS": {
-      return { ...state, items: action.payload};
+      return { ...state, items: action.payload, isLoading: false};
     }
     case "SET_LOADING": {
       return { ...state, isLoading: action.isLoading };
@@ -40,7 +40,7 @@ export const fetchPizzasTC = (category, sortBy) => {
     dispatch(actions.setLoading(true));
     let data = await pizzasAPI.getPizzas(category, sortBy);
     dispatch(actions.setPizzas(data));
-    dispatch(actions.setLoading(false));
+    // dispatch(actions.setLoading(false));
   };
 };
 

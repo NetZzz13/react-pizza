@@ -39,8 +39,8 @@ const Home = (props) => {
   /* console.log (category, sortBy) */
 
   useEffect(() => {
-    //if проверяет длину массива, чтобы не было лишнего нового запроса при переходе с Cart на Home
-    /* if (!pizzas.length) { */
+    //if проверяет длину массива, чтобы заново не запрашивать пиццы при переходе с Cart на Home
+    /* if (!pizzas.items.length) { */
     dispatch(fetchPizzasTC(category, sortBy));
     /* } */
   }, [category, sortBy]);
@@ -76,9 +76,7 @@ const Home = (props) => {
           {pizzas.map((elem) => (
             <PizzaBlock
               key={elem.id}
-              addedCount={
-                cartItems[elem.id] && cartItems[elem.id].length
-              } /* onAddPizza = {() => alert('22')} */
+              addedCount={cartItems[elem.id] && cartItems[elem.id].items.length}
               {...elem}
             />
           ))}

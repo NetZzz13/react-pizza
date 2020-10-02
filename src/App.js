@@ -4,6 +4,10 @@ import { Header } from "./components";
 import { Home, Cart } from "./pages";
 
 const App = (props) => {
+
+  
+
+  
   /* let [pizzas, setPizzas] = useState([]);
 
   useEffect(() => {
