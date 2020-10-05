@@ -7,9 +7,6 @@ const initialState = {
 const cartReducer = (state = initialState, action) => {
   switch (action.type) {
     case "ADD_PIZZA_TO_CART": {
-      
-      
-      
       const currentPizzaItems = !state.items[action.payload.id]
         ? [action.payload]
         : [...state.items[action.payload.id].items, action.payload];
@@ -25,6 +22,7 @@ const cartReducer = (state = initialState, action) => {
         },
       };
 
+      //refactor
       const totalCount = Object.keys(newItems).reduce(
         (total, elem) => newItems[elem].items.length + total,
         0
@@ -40,9 +38,6 @@ const cartReducer = (state = initialState, action) => {
         totalCount: totalCount,
         totalPrice: totalPrice,
       };
-
-
-      
     }
 
     case "REMOVE_CART_ITEM": {
@@ -170,7 +165,7 @@ export const actions = {
       payload: id,
     };
   },
-  
+
   minusCartItem: (id) => {
     return {
       type: "MINUS_CART_ITEM",

@@ -1,4 +1,3 @@
-import axios from "axios";
 import { pizzasAPI } from "../../api/api";
 
 const initialState = {

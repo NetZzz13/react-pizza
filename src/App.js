@@ -1,7 +1,8 @@
 import React from "react";
 import { Route } from "react-router-dom";
-import { Header } from "./components";
+import { Footer, Header } from "./components";
 import { Home, Cart } from "./pages";
+import TestHome from "./pages/TestHome";
 
 const App = (props) => {
   /* let [pizzas, setPizzas] = useState([]);
@@ -24,7 +25,9 @@ const App = (props) => {
       <div className="content">
         <Route exact path="/" component={() => <Home />} />
         <Route exact path="/cart" component={() => <Cart />} />
+        <Route exact path="/test" component={() => <TestHome />} />
       </div>
+      <Footer />
     </div>
   );
 };
