@@ -138,7 +138,7 @@ const cartReducer = (state = initialState, action) => {
   }
 };
 
-export const actions = {
+export const actionsCart = {
   addPizzaToCart: (pizza) => {
     return {
       type: "ADD_PIZZA_TO_CART",

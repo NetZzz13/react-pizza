@@ -17,10 +17,9 @@
       overflow-x: auto;
       overflow-y: hidden;
       margin: 10px 0px;
-
+      cursor: pointer;
       &::-webkit-scrollbar {
         height: 8px;
-
         /* display: none; */
       }
 
@@ -33,7 +32,6 @@
       /* Handle on hover */
       &::-webkit-scrollbar-thumb:hover {
         background: #dad1d1;
-        cursor: pointer;
       }
     }
 

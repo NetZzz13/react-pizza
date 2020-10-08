@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, CartItem } from "../components";
-import { actions } from "../redux/reducers/cart-reducer";
+import { actionsCart } from "../redux/reducers/cart-reducer";
 import {
   getCartItems,
   getTotalPrice,
@@ -19,20 +19,20 @@ const Cart = () => {
 
   //чтобы не производить лишний ререндер делаю dispatch через функцию, а не сразу через onClick
   const onClearCart = () => {
-    dispatch(actions.clearCart());
+    dispatch(actionsCart.clearCart());
   };
 
   const onRemoveCartItem = (id) => {
-    dispatch(actions.removeCartItem(id));
+    dispatch(actionsCart.removeCartItem(id));
   };
 
   const onPlusCartItem = (id) => {
-    dispatch(actions.plusCartItem(id));
+    dispatch(actionsCart.plusCartItem(id));
   };
 
   const onMinusCartItem = (id) => {
 
-    dispatch(actions.minusCartItem(id));
+    dispatch(actionsCart.minusCartItem(id));
   };
 
   const onClickOrder = () => {

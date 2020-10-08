@@ -3,7 +3,6 @@ import React from "react";
 //React.memo - делает поверхностное сравнение (если ссылка на items не изменилась - не делать лишний ререндер)
 const Categories = React.memo(({ activeCategory, items, onClickCategory }) => {
 
-
   return (
     <div className="categories">
       <ul>

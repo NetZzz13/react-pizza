@@ -1,8 +1,9 @@
 import React, { useCallback, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Categories, SortPopup, PizzaBlock } from "../components";
+import { Categories, SortPopup, PizzaBlock, LoadingBlock } from "../components";
 import Preloader from "../components/common/Preloader";
-import { actions } from "../redux/reducers/filters-reducer";
+import { actionsFilters } from "../redux/reducers/filters-reducer";
+import { actionsCart } from "../redux/reducers/cart-reducer";
 import { fetchPizzasTC } from "../redux/reducers/pizzas-reducer";
 import {
   getCategory,
@@ -47,11 +48,11 @@ const Home = (props) => {
 
   //useCallBack - для отмены лишнего ререндера Категорий при получении данных с серва
   const onSelectCategory = useCallback((category) => {
-    dispatch(actions.setCategory(category));
+    dispatch(actionsFilters.setCategory(category));
   }, []);
 
   const onSelectSortBy = useCallback((type) => {
-    dispatch(actions.setSortBy(type));
+    dispatch(actionsFilters.setSortBy(type));
   }, []);
 
   return (
@@ -69,19 +70,23 @@ const Home = (props) => {
         />
       </div>
       <h2 className="content__title">Все пиццы</h2>
-      {isLoading ? (
-        <Preloader />
-      ) : (
-        <div className="content__items">
-          {pizzas.map((elem) => (
-            <PizzaBlock
-              key={elem.id}
-              addedCount={cartItems[elem.id] && cartItems[elem.id].items.length}
-              {...elem}
-            />
-          ))}
-        </div>
-      )}
+
+      <div className="content__items">
+        {isLoading
+          ? /*  <Preloader /> */
+            Array(10)
+              .fill(0)
+              .map((_, index) => <LoadingBlock key={index} />)
+          : pizzas.map((elem) => (
+              <PizzaBlock
+                key={elem.id}
+                addedCount={
+                  cartItems[elem.id] && cartItems[elem.id].items.length
+                }
+                {...elem}
+              />
+            ))}
+      </div>
     </div>
   );
 };

@@ -3,8 +3,8 @@ import loading from "../../assets/img/loading.gif";
 
 const Preloader = () => {
   return (
-    <div style={{ display: "flex", justifyContent: "center" }}>
-      <img src={loading} style={{ width: "100px" }} alt="preloader" />
+    <div className="preloader">
+      <img className="preloader__icon" src={loading} alt="preloader" />
     </div>
   );
 };

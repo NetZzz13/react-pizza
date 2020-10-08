@@ -3,6 +3,8 @@ import { pizzasAPI } from "../../api/api";
 const initialState = {
   items: [],
   isLoading: false,
+  availableTypes: ["тонкое", "традиционное"],
+  availableSizes: [26, 30, 40]
 };
 
 const pizzasReducer = (state = initialState, action) => {
@@ -19,7 +21,7 @@ const pizzasReducer = (state = initialState, action) => {
   }
 };
 
-export const actions = {
+export const actionsPizzas = {
   setPizzas: (items) => {
     return {
       type: "SET_PIZZAS",
@@ -36,9 +38,9 @@ export const actions = {
 
 export const fetchPizzasTC = (category, sortBy) => {
   return async (dispatch) => {
-    dispatch(actions.setLoading(true));
+    dispatch(actionsPizzas.setLoading(true));
     let data = await pizzasAPI.getPizzas(category, sortBy);
-    dispatch(actions.setPizzas(data));
+    dispatch(actionsPizzas.setPizzas(data));
     // dispatch(actions.setLoading(false));
   };
 };

@@ -1,6 +1,7 @@
 const initialState = {
   category: null,
   sortBy: {type: "popular", order: "desc"},
+  
 };
 
 const filtersReducer = (state = initialState, action) => {
@@ -16,7 +17,7 @@ const filtersReducer = (state = initialState, action) => {
   }
 };
 
-export const actions = {
+export const actionsFilters = {
   setSortBy: (sortBy) => {
     return {
       type: "SET_SORT_BY",

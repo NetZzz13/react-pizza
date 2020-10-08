@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import cn from "classnames";
 import PropTypes from "prop-types";
 import Button from "./common/Button";
-import { actions } from "../redux/reducers/cart-reducer";
-import { useDispatch } from "react-redux";
+import { actionsCart } from "../redux/reducers/cart-reducer";
+import { useDispatch, useSelector } from "react-redux";
+import { getAvailableSizes, getAvailableTypes } from "../redux/selectors/selectors";
+
 
 const PizzaBlock = ({
   id,
@@ -12,16 +14,16 @@ const PizzaBlock = ({
   price,
   types,
   sizes,
-  addedCount,
+  addedCount
 }) => {
-  const availableTypes = ["тонкое", "традиционное"];
-  const availableSizes = [26, 30, 40];
+  const availableSizes = useSelector(getAvailableSizes)
+  const availableTypes = useSelector(getAvailableTypes)
 
   const [activeType, setActiveType] = useState(types[0]);
   const [activeSize, setActiveSize] = useState(0);
 
   const dispatch = useDispatch();
-
+  
   const onAddPizza = () => {
     const obj = {
       id,
@@ -31,8 +33,9 @@ const PizzaBlock = ({
       size: availableSizes[activeSize],
       type: availableTypes[activeType],
     };
+   
     /* console.log(obj) */
-    dispatch(actions.addPizzaToCart(obj));
+    dispatch(actionsCart.addPizzaToCart(obj));
   };
 
   return (
