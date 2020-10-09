@@ -23,10 +23,9 @@ const PizzaBlock = ({
 
   const [activeType, setActiveType] = useState(types[0]);
   const [activeSize, setActiveSize] = useState(sizes[0]);
-  console.log(sizes.indexOf(sizes[0]));
 
   const dispatch = useDispatch();
-  /* debugger; */
+
   const onAddPizza = () => {
     const obj = {
       id,

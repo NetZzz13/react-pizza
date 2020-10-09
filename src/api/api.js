@@ -6,7 +6,7 @@ export const pizzasAPI = {
   getPizzas(category, sortBy) {
     return axios
       .get(
-        `http://localhost:3001/pizzas/?${
+        `/pizzas/?${
           category !== null ? `category=${category}` : ""
         }&_sort=${sortBy.type}&_order=${sortBy.order}`
       )
