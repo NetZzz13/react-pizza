@@ -4,8 +4,10 @@ import PropTypes from "prop-types";
 import Button from "./common/Button";
 import { actionsCart } from "../redux/reducers/cart-reducer";
 import { useDispatch, useSelector } from "react-redux";
-import { getAvailableSizes, getAvailableTypes } from "../redux/selectors/selectors";
-
+import {
+  getAvailableSizes,
+  getAvailableTypes,
+} from "../redux/selectors/selectors";
 
 const PizzaBlock = ({
   id,
@@ -14,16 +16,17 @@ const PizzaBlock = ({
   price,
   types,
   sizes,
-  addedCount
+  addedCount,
 }) => {
-  const availableSizes = useSelector(getAvailableSizes)
-  const availableTypes = useSelector(getAvailableTypes)
+  const availableSizes = useSelector(getAvailableSizes);
+  const availableTypes = useSelector(getAvailableTypes);
 
   const [activeType, setActiveType] = useState(types[0]);
-  const [activeSize, setActiveSize] = useState(0);
+  const [activeSize, setActiveSize] = useState(sizes[0]);
+  console.log(sizes.indexOf(sizes[0]));
 
   const dispatch = useDispatch();
-  
+  /* debugger; */
   const onAddPizza = () => {
     const obj = {
       id,
@@ -33,7 +36,7 @@ const PizzaBlock = ({
       size: availableSizes[activeSize],
       type: availableTypes[activeType],
     };
-   
+
     /* console.log(obj) */
     dispatch(actionsCart.addPizzaToCart(obj));
   };
@@ -61,9 +64,9 @@ const PizzaBlock = ({
           {availableSizes.map((size, index) => (
             <li
               key={size}
-              onClick={() => setActiveSize(index)}
+              onClick={() => setActiveSize(size)}
               className={cn({
-                active: activeSize === index,
+                active: activeSize === size,
                 disabled: !sizes.includes(size),
               })}
             >

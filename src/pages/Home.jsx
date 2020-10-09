@@ -23,7 +23,7 @@ const categoryNames = [
 
 const sortNames = [
   { name: "популярности", type: "popular", order: "desc" },
-  { name: "цене", type: "price", order: "desc" },
+  { name: "цене", type: "price", order: "asc" },
   { name: "алфавиту", type: "name", order: "asc" },
 ];
 
